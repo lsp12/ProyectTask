@@ -9,9 +9,10 @@ const Home = () => {
   return (
     <div>
       <h1>Aplication</h1>
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+      {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />}
 
-      <Profile />
+      <Profile /> */}
+      
     </div>
   );
 };
