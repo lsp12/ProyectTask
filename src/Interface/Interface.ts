@@ -11,5 +11,6 @@ export interface IFormTask{
     title: string;
     description: string;
     image: string;
+    type: string;
     tads?: ITads[];
 }

@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -36,32 +37,37 @@ const FormTasks = () => {
     console.log(tags);
   }, [tags]);
 
-  const {getFieldProps, handleSubmit, resetForm, errors, touched} = useFormik<IFormTask>({
-    initialValues: {
-      title: '',
-      description: '',
-      image: '',
-      tads: [],
-    },
-    validationSchema: schema,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
+  const { getFieldProps, handleSubmit, resetForm, errors, touched } =
+    useFormik<IFormTask>({
+      initialValues: {
+        title: "",
+        description: "",
+        image: "",
+        type: "",
+        tads: [],
+      },
+      validationSchema: schema,
+      onSubmit: ({title,description, image, type, tads}) => {
+        console.log(title,description, image, type, tads);
+        resetForm();
+        /* alert(JSON.stringify(values, null, 2)); */
+      },
+    });
 
   return (
-    <form style={{ paddingTop: "1em" }}>
+    <form onSubmit={handleSubmit} autoComplete="true" style={{ paddingTop: "1em" }}>
       <p>Ceate Tasks or Proyect</p>
 
       <Box>
         <TextField
-          required
           id="outlined-required"
           label="Title"
           variant="outlined"
           fullWidth
           sx={{ maxWidth: "25em" }}
+          {...getFieldProps("title")}
+          error={!!errors.title && touched.title}
+          helperText={touched.title && errors.title}
         />
       </Box>
       <Box pt="0.5em">
@@ -74,16 +80,21 @@ const FormTasks = () => {
           variant="outlined"
           fullWidth
           sx={{ maxWidth: "25em" }}
+          {...getFieldProps("description")}
+          error={!!errors.description && touched.description}
+          helperText={touched.description && errors.description}
         />
       </Box>
       <Box pt="0.5em">
         <TextField
-          error
           id="outlined-required"
-          label="Image(optional)"
+          label="Url Image(optional)"
           variant="outlined"
           fullWidth
           sx={{ maxWidth: "25em" }}
+          {...getFieldProps("image")}
+          error={!!errors.image && touched.image}
+          helperText={touched.image && errors.image}
         />
       </Box>
       <Box pt="0.5em">
@@ -93,15 +104,23 @@ const FormTasks = () => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
           label="type of publication"
-          onChange={handleChange}
+          /* onChange={handleChange} */
           fullWidth
           sx={{ maxWidth: "20em" }}
+          {...getFieldProps("type")}
+          error={!!errors.type && touched.type}
+          /* helperText={  touched.type && errors.type} */
         >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
           <MenuItem value={10}>Task</MenuItem>
           <MenuItem value={20}>Proyect</MenuItem>
         </Select>
+        <FormHelperText error={!!errors.type && touched.type}>
+          {touched.type && errors.type}
+        </FormHelperText>
       </Box>
       <Box
         pt="0.5em"
@@ -140,6 +159,8 @@ const FormTasks = () => {
             }}
             fullWidth
             sx={{ maxWidth: "25em" }}
+            
+          error={!!errors.tads && touched.tads}
           />
           <Grid container spacing={1}>
             {tags.map((tag) => (

@@ -11,7 +11,7 @@ const Home = () => {
   const array =[5,6,4,6,1,3];
   return (
     <div>
-      <h1>Added Tasks</h1>
+      <h1>World public tasks</h1>
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />}
 
       <Profile /> */}

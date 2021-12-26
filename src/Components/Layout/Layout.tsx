@@ -12,7 +12,7 @@ const Layout = ({ children }: ILayoutProps) => {
         container
         direction="row"
         justifyContent="center"
-        alignItems="center"
+        alignItems="flex-start"
         spacing={2}
       >
         {children}

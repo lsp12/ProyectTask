@@ -28,7 +28,7 @@ const CardTask = () => {
         <CardMedia
           component="img"
           height="194"
-          image="/static/images/cards/paella.jpg"
+          image="https://areajugones.sport.es/wp-content/uploads/2021/06/imagen-2021-06-27-095909.jpg"
           alt="name del personal"
         />
         <CardContent>
@@ -39,12 +39,12 @@ const CardTask = () => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          {/* <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
-          </IconButton>
+          </IconButton> */}
         </CardActions>
       </Card>
     </Grid>
