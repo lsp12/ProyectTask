@@ -11,8 +11,15 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { Box, Grid } from "@mui/material";
+import dateFormat, { masks } from "dateformat";
+import { useAppDispatch, useAppSelector } from "../../Store/hooks";
+import { getTask } from "../../Store/ActionTask/Task.reducer";
+import { IcardsProps, IFormTask } from "../../Interface/Interface";
 
-const CardTask = () => {
+const CardTask = ({items}:IcardsProps) => {
+  const date = new Date();
+  console.log(items);
+
   return (
     <Grid item xs={12} md={4}>
       <Card itemScope itemType="http://schema.org/Typ">
@@ -22,28 +29,35 @@ const CardTask = () => {
               R
             </Avatar>
           }
-          itemProp="name" title="name"
+          itemProp="name"
+          title={items.title}
           subheader="fecha de publicacion"
         />
         <CardMedia
-        itemProp="image"
+          itemProp="image"
           component="img"
           height="194"
-          image="https://areajugones.sport.es/wp-content/uploads/2021/06/imagen-2021-06-27-095909.jpg"
+          image={items.image}
           alt="foto descriptiva"
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary" itemProp="description" >
-            descripcion de la tarea: This impressive paella is a perfect party
-            dish and a fun meal to cook together with your guests. Add 1 cup of
-            frozen peas along with the mussels, if you like.
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            itemProp="description"
+          >
+            {items.description}
           </Typography>
-          <Typography variant="body2" color="text.secondary" itemProp="author" >
-            Autor:nombre autor
-            </Typography>
-            <Typography variant="body2" color="text.secondary" itemProp="datePublished" >
-            {Date.now()}
-            </Typography>
+          <Typography variant="body2" color="text.secondary" itemProp="author">
+            Autor:{items.author}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            itemProp="datePublished"
+          >
+            {dateFormat(items.createdAT, "dddd, mmmm dS, yyyy")}
+          </Typography>
         </CardContent>
         <CardActions disableSpacing>
           {/* <IconButton aria-label="add to favorites">

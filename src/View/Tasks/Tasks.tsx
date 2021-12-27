@@ -5,12 +5,15 @@ import FormTasks from "../../Components/Forms/FormTasks/FormTasks";
 import Layout from "../../Components/Layout/Layout";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
 import { publishTaks } from "../../Store/ActionState/State.slice";
+import { IFormTask } from "../../Interface/Interface";
 
 const Tasks = () => {
   const array = [5, 6, 4, 6, 1, 3];
   const dispatch = useAppDispatch();
   const publis = useAppSelector((state) => state.State.publish);
+  const allTask = useAppSelector((state) => state.Task.getTask);
   console.log(publis);
+  
   return (
     <Layout>
       <Grid item xs={12} md={4}>
@@ -37,8 +40,8 @@ const Tasks = () => {
               </Button>
             </Box>
           </Grid>
-          {publis==="Private"?array?.map((item, index) => (
-              <CardTask key={index} />
+          {publis==="Private"?allTask?.map((item:IFormTask, index) => (
+              <CardTask key={index} items={item} />
             )):null}
           
          

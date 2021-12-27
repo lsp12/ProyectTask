@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import State from './ActionState/State.slice'
-
+import Task from './ActionTask/Task.slice'
 export const Store= configureStore({
   reducer: {
-    State
+    State,
+    Task
   }
 })
 

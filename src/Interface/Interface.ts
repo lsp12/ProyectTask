@@ -14,3 +14,24 @@ export interface IFormTask{
     type: string;
     tads?: ITads[];
 }
+
+export interface IFormAuthor extends IFormTask{
+    author?: string;
+    id?: string;
+    createdAT?: string;
+}
+
+export interface IAWS{
+    data:{
+        body:{
+            res:{
+                Items:IFormAuthor[],
+                count: number;
+            }
+        }
+    }
+}
+
+export interface IcardsProps{
+    items: IFormAuthor;
+}

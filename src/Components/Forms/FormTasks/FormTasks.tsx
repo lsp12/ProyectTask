@@ -13,11 +13,14 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import { IFormTask } from "../../../Interface/Interface";
+import { IFormTask, ITads } from "../../../Interface/Interface";
+import { getTask, PostTask } from "../../../Store/ActionTask/Task.reducer";
+import { useAppDispatch } from "../../../Store/hooks";
 import { schema } from "../../../yup/Yup";
 
 const FormTasks = () => {
   const [age, setAge] = React.useState("");
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -48,8 +51,12 @@ const FormTasks = () => {
       },
       validationSchema: schema,
       onSubmit: ({title,description, image, type, tads}) => {
-        console.log(title,description, image, type, tads);
+        const author = "anonimo";
+        tads=tags as unknown as ITads[];
+        dispatch(PostTask({title,description, image, type, tads,author }));
         resetForm();
+        setTags([]);
+
         /* alert(JSON.stringify(values, null, 2)); */
       },
     });
@@ -75,7 +82,6 @@ const FormTasks = () => {
           id="filled-multiline-flexible"
           label="Description"
           multiline
-          maxRows={4}
           rows={4}
           variant="outlined"
           fullWidth
