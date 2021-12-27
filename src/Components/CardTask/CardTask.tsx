@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Hidden } from "@mui/material";
 import dateFormat, { masks } from "dateformat";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
 import { getTask } from "../../Store/ActionTask/Task.reducer";
@@ -29,10 +29,9 @@ const CardTask = ({items}:IcardsProps) => {
               R
             </Avatar>
           }
-          itemProp="name"
           title={items.title}
-          subheader="fecha de publicacion"
         />
+        <p itemProp="name" style={{"display":"none" }} > {items.title} </p>
         <CardMedia
           itemProp="image"
           component="img"

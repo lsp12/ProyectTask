@@ -13,6 +13,7 @@ export interface IFormTask{
     image: string;
     type: string;
     tads?: ITads[];
+    public: boolean;
 }
 
 export interface IFormAuthor extends IFormTask{

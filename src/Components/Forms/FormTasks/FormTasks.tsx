@@ -48,12 +48,13 @@ const FormTasks = () => {
         image: "",
         type: "",
         tads: [],
+        public: false,
       },
       validationSchema: schema,
       onSubmit: ({title,description, image, type, tads}) => {
         const author = "anonimo";
         tads=tags as unknown as ITads[];
-        dispatch(PostTask({title,description, image, type, tads,author }));
+        dispatch(PostTask({title,description, image, type, tads,author, public: checked}));
         resetForm();
         setTags([]);
 
