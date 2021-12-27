@@ -7,8 +7,10 @@ import Layout from "./Components/Layout/Layout";
 import SideNav from "./Components/SideNav/SideNav";
 import DrawerNav from "./Components/DrawerNav/DrawerNav";
 import { Hidden } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
+  const { isAuthenticated } = useAuth0();
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,7 +20,10 @@ function App() {
       </Hidden>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Tasks" element={<Tasks />} />
+          {isAuthenticated && (
+            <Route path="/Tasks" element={<Tasks />} /> 
+          )}
+          
           <Route path="*" element={<div>404 not found</div>} />
         </Routes>
       </BrowserRouter>

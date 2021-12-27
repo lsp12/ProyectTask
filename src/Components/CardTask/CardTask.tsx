@@ -22,7 +22,7 @@ const CardTask = ({items}:IcardsProps) => {
 
   return (
     <Grid item xs={12} md={4}>
-      <Card itemScope itemType="http://schema.org/Typ">
+      <Card itemScope itemType="http://schema.org/Typ" sx={{width:"100%"}}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
