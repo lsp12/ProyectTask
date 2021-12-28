@@ -20,6 +20,8 @@ export interface IFormAuthor extends IFormTask{
     author?: string;
     id?: string;
     createdAT?: string;
+    email?: string;
+    picture?: string;
 }
 
 export interface IAWS{
@@ -29,6 +31,14 @@ export interface IAWS{
                 Items:IFormAuthor[],
                 count: number;
             }
+        }
+    }
+}
+
+export interface IAWSEmail{
+    data:{
+        body: {
+            Items: IFormAuthor[],
         }
     }
 }

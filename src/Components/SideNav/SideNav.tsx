@@ -51,7 +51,7 @@ const SideNav = () => {
                 <MenuIcon />
               </IconButton>
             </Hidden>
-            <Hidden mdDown>
+            <Hidden lgDown>
               <ButtonsLinks color={"white"} />
             </Hidden>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

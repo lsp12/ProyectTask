@@ -1,19 +1,30 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import CardTask from "../../Components/CardTask/CardTask";
 import FormTasks from "../../Components/Forms/FormTasks/FormTasks";
 import Layout from "../../Components/Layout/Layout";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
 import { publishTaks } from "../../Store/ActionState/State.slice";
 import { IFormTask } from "../../Interface/Interface";
+import { getEmail } from "../../Store/ActionTask/Task.reducer";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Tasks = () => {
-  const array = [5, 6, 4, 6, 1, 3];
   const dispatch = useAppDispatch();
   const publis = useAppSelector((state) => state.State.publish);
-  const allTask = useAppSelector((state) => state.Task.getTask);
-  console.log(publis);
-  
+  const email = useAppSelector((state) => state.Task.getEmail);
+  const loading = useAppSelector((state) => state.Task.loading);
+  const { user } = useAuth0();
+
+  useEffect(() => {
+    if (user?.email) {
+      dispatch(getEmail(user?.email));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(email);
+
   return (
     <Layout>
       <Grid item xs={12} md={4}>
@@ -28,23 +39,40 @@ const Tasks = () => {
               borderBottom={"solid #1976d2 2px"}
               marginTop={"0.8em"}
             >
-              <Button variant={publis==="Private"?"contained": "outlined"   } fullWidth onClick={()=>{
-                  dispatch(publishTaks("Private"))
-              }}>
+              <Button
+                variant={publis === "Private" ? "contained" : "outlined"}
+                fullWidth
+                onClick={() => {
+                  dispatch(publishTaks("Private"));
+                }}
+              >
                 <Typography variant="body2">Private</Typography>
               </Button>
-              <Button variant={publis==="Public"?"contained": "outlined"} fullWidth onClick={()=>{
-                  dispatch(publishTaks("Public"))
-              }}>
+              <Button
+                variant={publis === "Public" ? "contained" : "outlined"}
+                fullWidth
+                onClick={() => {
+                  dispatch(publishTaks("Public"));
+                }}
+              >
                 <Typography variant="body2">Public</Typography>
               </Button>
             </Box>
           </Grid>
-          {publis==="Private"?allTask?.map((item:IFormTask, index) => (
-              <CardTask key={index} items={item} />
-            )):null}
-          
-         
+          {loading && (
+            <Grid item xs={12} md={12}>
+              <CircularProgress />
+            </Grid>
+          )}
+          {publis === "Private"
+            ? email?.map(
+                (item: IFormTask, index) =>
+                  item.public === false && <CardTask key={index} items={item} />
+              )
+            : email?.map(
+                (item: IFormTask, index) =>
+                  item.public === true && <CardTask key={index} items={item} />
+              )}
         </Grid>
       </Grid>
     </Layout>

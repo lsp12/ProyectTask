@@ -1,5 +1,5 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import {
-  Avatar,
   Box,
   Button,
   FormHelperText,
@@ -7,24 +7,20 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   Switch,
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { IFormTask, ITads } from "../../../Interface/Interface";
-import { getTask, PostTask } from "../../../Store/ActionTask/Task.reducer";
+import { getEmail, PostTask } from "../../../Store/ActionTask/Task.reducer";
 import { useAppDispatch } from "../../../Store/hooks";
 import { schema } from "../../../yup/Yup";
 
 const FormTasks = () => {
-  const [age, setAge] = React.useState("");
   const dispatch = useAppDispatch();
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
+  const { user } = useAuth0();
 
   const [checked, setChecked] = React.useState(false);
 
@@ -51,19 +47,38 @@ const FormTasks = () => {
         public: false,
       },
       validationSchema: schema,
-      onSubmit: ({title,description, image, type, tads}) => {
-        const author = "anonimo";
-        tads=tags as unknown as ITads[];
-        dispatch(PostTask({title,description, image, type, tads,author, public: checked}));
+      onSubmit: ({ title, description, image, type, tads }) => {
+        const author = user?.name;
+        const email = user?.email;
+        const picture = user?.picture;
+        tads = tags as unknown as ITads[];
+        dispatch(
+          PostTask({
+            title,
+            description,
+            image,
+            type,
+            tads,
+            author,
+            email,
+            picture,
+            public: checked,
+          })
+        );
         resetForm();
         setTags([]);
-
-        /* alert(JSON.stringify(values, null, 2)); */
+        if (email) {
+          dispatch(getEmail(email));
+        }
       },
     });
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="true" style={{ paddingTop: "1em" }}>
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="true"
+      style={{ paddingTop: "1em" }}
+    >
       <p>Ceate Tasks or Proyect</p>
 
       <Box>
@@ -166,8 +181,7 @@ const FormTasks = () => {
             }}
             fullWidth
             sx={{ maxWidth: "25em" }}
-            
-          error={!!errors.tads && touched.tads}
+            error={!!errors.tads && touched.tads}
           />
           <Grid container spacing={1}>
             {tags.map((tag) => (

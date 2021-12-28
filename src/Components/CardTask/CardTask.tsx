@@ -5,33 +5,42 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import { Box, Grid, Hidden } from "@mui/material";
-import dateFormat, { masks } from "dateformat";
-import { useAppDispatch, useAppSelector } from "../../Store/hooks";
-import { getTask } from "../../Store/ActionTask/Task.reducer";
-import { IcardsProps, IFormTask } from "../../Interface/Interface";
+import { Box, Grid } from "@mui/material";
+import dateFormat from "dateformat";
+import { IcardsProps } from "../../Interface/Interface";
 
-const CardTask = ({items}:IcardsProps) => {
-  const date = new Date();
-  console.log(items);
-
+const CardTask = ({ items }: IcardsProps) => {
   return (
     <Grid item xs={12} md={4}>
-      <Card itemScope itemType="http://schema.org/Typ" sx={{width:"100%"}}>
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
-            </Avatar>
-          }
-          title={items.title}
-        />
-        <p itemProp="name" style={{"display":"none" }} > {items.title} </p>
+      <Card itemScope itemType="http://schema.org/Typ" sx={{ width: "100%" }}>
+        {items.picture ? (
+          <CardHeader
+            avatar={
+              <Avatar
+                sx={{ bgcolor: red[500] }}
+                aria-label="recipe"
+                src={items.picture}
+              />
+            }
+            title={items.title}
+          />
+        ) : (
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                {items.title.charAt(0)}
+              </Avatar>
+            }
+            title={items.title}
+          />
+        )}
+
+        <p itemProp="name" style={{ display: "none" }}>
+          {" "}
+          {items.title}{" "}
+        </p>
         <CardMedia
           itemProp="image"
           component="img"
@@ -57,6 +66,41 @@ const CardTask = ({items}:IcardsProps) => {
           >
             {dateFormat(items.createdAT, "dddd, mmmm dS, yyyy")}
           </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            itemProp="dateModified"
+            textAlign={"left"}
+          >
+            tags:
+          </Typography>
+          <Grid container spacing={1}>
+            {items.tads &&
+              items.tads.map((tag) => (
+                <Grid item key={tag.tad}>
+                  <Box
+                    bgcolor={"#1976d2"}
+                    color={"white"}
+                    borderRadius={"10px"}
+                    padding={"3px"}
+                    display={"flex"}
+                    alignItems={"center"}
+                  >
+                    @{tag}
+                    {/* <Box
+                    pl={"0.5em"}
+                    onClick={() => {
+                      tags.splice(tags.indexOf(tag), 1);
+                      setTags([...tags]);
+                    }}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    X
+                  </Box> */}
+                  </Box>
+                </Grid>
+              ))}
+          </Grid>
         </CardContent>
         <CardActions disableSpacing>
           {/* <IconButton aria-label="add to favorites">
