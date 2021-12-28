@@ -26,15 +26,10 @@ const FormTasks = () => {
 
   const handleSwith = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
-    console.log(event.target);
   };
 
   const [tags, setTags] = React.useState<string[]>([]);
   const [disable, setDisable] = React.useState(false);
-
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
 
   const { getFieldProps, handleSubmit, resetForm, errors, touched } =
     useFormik<IFormTask>({

@@ -21,23 +21,23 @@ const DrawerNav = () => {
 
       dispatch(drawer(false));
     };
-  console.log(open + "open");
-
 
   return (
-    
-      <Drawer anchor={"left"} open={open} onClose={toggleDrawer(false)} sx={{width:"3px"}}>
-        <Box color={"white"} bgcolor={"#1976d2"} p={"0.8em"}>
-          <Typography variant="h5">
-            <b>Menu Tasks</b>
-          </Typography>
-        </Box>
-        <Box bgcolor={"#1366B8"} height={"100%"} >
-          <ButtonsLinks color={"#B0C9E2"} />
-          
-        </Box>
-      </Drawer>
-    
+    <Drawer
+      anchor={"left"}
+      open={open}
+      onClose={toggleDrawer(false)}
+      sx={{ width: "3px" }}
+    >
+      <Box color={"white"} bgcolor={"#1976d2"} p={"0.8em"}>
+        <Typography variant="h5">
+          <b>Menu Tasks</b>
+        </Typography>
+      </Box>
+      <Box bgcolor={"#1366B8"} height={"100%"}>
+        <ButtonsLinks color={"#B0C9E2"} />
+      </Box>
+    </Drawer>
   );
 };
 

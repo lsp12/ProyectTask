@@ -20,10 +20,8 @@ const Tasks = () => {
     if (user?.email) {
       dispatch(getEmail(user?.email));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(email);
 
   return (
     <Layout>
