@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.css";
 import Home from "./View/Home/Home";
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Tasks from "./View/Tasks/Tasks";
-import Layout from "./Components/Layout/Layout";
 import SideNav from "./Components/SideNav/SideNav";
 import DrawerNav from "./Components/DrawerNav/DrawerNav";
 import { Hidden } from "@mui/material";
