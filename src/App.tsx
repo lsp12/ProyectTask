@@ -1,18 +1,32 @@
 import React from "react";
 import "./App.css";
 import Home from "./View/Home/Home";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Tasks from "./View/Tasks/Tasks";
 import Layout from "./Components/Layout/Layout";
+import SideNav from "./Components/SideNav/SideNav";
+import DrawerNav from "./Components/DrawerNav/DrawerNav";
+import { Hidden } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
+  const { isAuthenticated } = useAuth0();
+  
+
   return (
     <div className="App">
       <BrowserRouter>
-      <Layout />
+      <SideNav />
+      <Hidden lgUp>
+      <DrawerNav />
+      </Hidden>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Tasks" element={<Tasks />} />
+          {isAuthenticated ? (
+            <Route path="/Tasks" element={<Tasks />} /> 
+          ):(
+            <Route path="/Tasks" element={<Navigate replace to="/" />} />
+          )}
           <Route path="*" element={<div>404 not found</div>} />
         </Routes>
       </BrowserRouter>
